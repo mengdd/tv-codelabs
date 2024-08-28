@@ -16,10 +16,14 @@
 
 package com.example.tvcomposeintroduction.ui.screens.catalog
 
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.tv.material3.Text
 import com.example.tvcomposeintroduction.data.Movie
 
 @Composable
@@ -28,4 +32,10 @@ fun CatalogBrowser(
     catalogBrowserViewModel: CatalogBrowserViewModel = hiltViewModel(),
     onMovieSelected: (Movie) -> Unit = {}
 ) {
+    val categoryList by catalogBrowserViewModel.categoryList.collectAsStateWithLifecycle()
+    LazyColumn(modifier = modifier) {
+        items(categoryList) { category ->
+            Text(text = category.name)
+        }
+    }
 }
