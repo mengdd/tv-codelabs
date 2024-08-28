@@ -19,6 +19,7 @@ package com.example.tvcomposeintroduction.ui.screens.catalog
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,12 +28,16 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.tv.material3.Carousel
 import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Text
+import coil.compose.AsyncImage
+import com.example.tvcomposeintroduction.R
 import com.example.tvcomposeintroduction.data.Movie
 import com.example.tvcomposeintroduction.ui.components.MovieCard
 
@@ -56,11 +61,19 @@ fun CatalogBrowser(
                 itemCount = featuredMovieList.size,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(376.dp)
-            ) { indexOfCarouselSlide ->
-                val featuredMovie =
-                    featuredMovieList[indexOfCarouselSlide]
+                    .height(376.dp),
+            ) { indexOfCarouselItem ->
+                val featuredMovie = featuredMovieList[indexOfCarouselItem]
                 Box {
+                    AsyncImage(
+                        model = featuredMovie.backgroundImageUrl,
+                        contentDescription = null,
+                        placeholder = painterResource(
+                            id = R.drawable.placeholder
+                        ),
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize(),
+                    )
                     Text(text = featuredMovie.title)
                 }
             }
