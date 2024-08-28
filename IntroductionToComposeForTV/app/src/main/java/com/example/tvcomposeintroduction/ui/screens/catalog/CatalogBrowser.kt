@@ -16,12 +16,15 @@
 
 package com.example.tvcomposeintroduction.ui.screens.catalog
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.tv.material3.Text
@@ -36,10 +39,16 @@ fun CatalogBrowser(
 ) {
     val categoryList by
     catalogBrowserViewModel.categoryList.collectAsStateWithLifecycle()
-    LazyColumn(modifier = modifier) {
+    LazyColumn(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(horizontal = 48.dp, vertical = 32.dp)
+    ) {
         items(categoryList) { category ->
             Text(text = category.name)
-            LazyRow {
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
                 items(category.movieList) { movie ->
                     MovieCard(movie = movie)
                 }
